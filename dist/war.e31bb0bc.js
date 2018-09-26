@@ -22109,7 +22109,7 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"utils/getData.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"src/utils/getData.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22166,7 +22166,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _getData = _interopRequireDefault(require("../../utils/getData"));
+var _getData = _interopRequireDefault(require("../utils/getData"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22237,7 +22237,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.default = Board;
-},{"react":"node_modules/react/index.js","../../utils/getData":"utils/getData.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../utils/getData":"src/utils/getData.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -22280,7 +22280,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51493" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61009" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -1,5 +1,5 @@
 import React from 'react';
-import createDeck from '../../utils/getData';
+import createDeck from '../utils/getData';
 
 export default class Board extends React.Component {
   state = {
