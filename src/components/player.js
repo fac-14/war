@@ -17,7 +17,9 @@ export default class Player extends React.Component {
         return (
             <div>
                 <div>{this.state.name}: {this.state.score}</div>
-                <img src={this.state.card ? this.state.card.image : backCard}></img>
+                {/* score bigger 0 ? then show back of card */}
+                {this.state.score ? <img src={backCard} /> : <div className="emptySpace" />}
+                {this.state.card ? <img src={this.state.card.image} /> : <div className="emptySpace" />}
             </div>
         )
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import createDeck from '../utils/getData';
 import { playNextCard } from '../utils/logic';
 import Player from "./player"
+import "./board.css";
 
 export default class Board extends React.Component {
   state = {

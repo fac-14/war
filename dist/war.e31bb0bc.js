@@ -22243,8 +22243,14 @@ function (_React$Component) {
   _createClass(Player, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("div", null, this.state.name, ": ", this.state.score), _react.default.createElement("img", {
-        src: this.state.card ? this.state.card.image : _cardBack.default
+      return _react.default.createElement("div", null, _react.default.createElement("div", null, this.state.name, ": ", this.state.score), this.state.score ? _react.default.createElement("img", {
+        src: _cardBack.default
+      }) : _react.default.createElement("div", {
+        className: "emptySpace"
+      }), this.state.card ? _react.default.createElement("img", {
+        src: this.state.card.image
+      }) : _react.default.createElement("div", {
+        className: "emptySpace"
       }));
     }
   }]);
@@ -22253,7 +22259,79 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.default = Player;
-},{"react":"node_modules/react/index.js","../cardBack.png":"src/cardBack.png"}],"src/components/board.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../cardBack.png":"src/cardBack.png"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"src/components/board.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"src/components/board.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22268,6 +22346,8 @@ var _getData = _interopRequireDefault(require("../utils/getData"));
 var _logic = require("../utils/logic");
 
 var _player = _interopRequireDefault(require("./player"));
+
+require("./board.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22354,7 +22434,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.default = Board;
-},{"react":"node_modules/react/index.js","../utils/getData":"src/utils/getData.js","../utils/logic":"src/utils/logic.js","./player":"src/components/player.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../utils/getData":"src/utils/getData.js","../utils/logic":"src/utils/logic.js","./player":"src/components/player.js","./board.css":"src/components/board.css"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -22397,7 +22477,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65323" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53826" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
