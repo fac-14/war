@@ -22127,7 +22127,7 @@ var checkResponse = function checkResponse(response) {
 
 var getData = function getData(url) {
   return fetch(url).then(checkResponse).catch(function (err) {
-    throw new Error('fetch getData failed ${err}');
+    throw new Error("fetch getData failed ".concat(err));
   });
 };
 
@@ -22156,7 +22156,104 @@ var createDeck = function createDeck() {
 
 var _default = createDeck;
 exports.default = _default;
-},{}],"src/components/board.js":[function(require,module,exports) {
+},{}],"src/utils/logic.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.playNextCard = void 0;
+
+// takes top card (index 0)from pile and add it to played pile
+var playNextCard = function playNextCard(pile, playedPile) {
+  console.log(playedPile);
+  var playedCard = pile.shift();
+  playedPile.push(playedCard);
+  return {
+    pile: pile,
+    playedPile: playedPile
+  };
+};
+
+exports.playNextCard = playNextCard;
+},{}],"src/cardBack.png":[function(require,module,exports) {
+module.exports = "/cardBack.822ab68a.png";
+},{}],"src/components/player.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _cardBack = _interopRequireDefault(require("../cardBack.png"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Player =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Player, _React$Component);
+
+  function Player() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    var _temp;
+
+    _classCallCheck(this, Player);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Player)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      name: _this.props.playerName,
+      score: _this.props.score,
+      card: _this.props.playedPile ? _this.props.playedPile.pop() : {}
+    }, _this.componentWillReceiveProps = function (nextProps) {
+      _this.setState({
+        score: nextProps.score,
+        card: nextProps.playedPile ? nextProps.playedPile[nextProps.playedPile.length - 1] : {}
+      });
+    }, _temp));
+  }
+
+  _createClass(Player, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement("div", null, this.state.name, ": ", this.state.score), _react.default.createElement("img", {
+        src: this.state.card ? this.state.card.image : _cardBack.default
+      }));
+    }
+  }]);
+
+  return Player;
+}(_react.default.Component);
+
+exports.default = Player;
+},{"react":"node_modules/react/index.js","../cardBack.png":"src/cardBack.png"}],"src/components/board.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22167,6 +22264,10 @@ exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
 
 var _getData = _interopRequireDefault(require("../utils/getData"));
+
+var _logic = require("../utils/logic");
+
+var _player = _interopRequireDefault(require("./player"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22204,29 +22305,45 @@ function (_React$Component) {
 
     return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Board)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
       player1: {
-        pile: [1, 2, 3, 4, 5],
-        playedPile: [],
-        score: 0
+        pile: [],
+        playedPile: []
       },
       player2: {
-        pile: [1, 2, 3, 4, 5],
-        playedPile: [],
-        score: 0
+        pile: [],
+        playedPile: []
       }
     }, _this.componentDidMount = function () {
       (0, _getData.default)().then(function (data) {
-        return console.log(data);
+        return _this.setState({
+          player1: {
+            pile: data.pile1,
+            playedPile: []
+          },
+          player2: {
+            pile: data.pile2,
+            playedPile: []
+          }
+        });
       });
     }, _this.playGame = function () {
-      _this.setState({
-        player1: {
-          pile: [1, 2, 3]
-        }
+      _this.setState(function (prevState) {
+        return {
+          player1: (0, _logic.playNextCard)(prevState.player1.pile, prevState.player1.playedPile),
+          player2: (0, _logic.playNextCard)(prevState.player2.pile, prevState.player2.playedPile)
+        };
       });
     }, _this.render = function () {
       return _react.default.createElement("main", {
         id: "board"
-      }, _react.default.createElement("div", null, "Player 1: ", _this.state.player1.pile.length, " "), _react.default.createElement("div", null, "Player 2: ", _this.state.player2.pile.length, " "), _react.default.createElement("button", {
+      }, _react.default.createElement(_player.default, {
+        playerName: "Player",
+        score: _this.state.player1.pile.length,
+        playedPile: _this.state.player1.playedPile
+      }), _react.default.createElement(_player.default, {
+        playerName: "Computer",
+        score: _this.state.player2.pile.length,
+        playedPile: _this.state.player2.playedPile
+      }), _react.default.createElement("button", {
         id: "play",
         onClick: _this.playGame
       }, "Play!"));
@@ -22237,7 +22354,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.default = Board;
-},{"react":"node_modules/react/index.js","../utils/getData":"src/utils/getData.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../utils/getData":"src/utils/getData.js","../utils/logic":"src/utils/logic.js","./player":"src/components/player.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -22280,7 +22397,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61009" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65323" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

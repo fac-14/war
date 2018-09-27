@@ -9,7 +9,7 @@ const getData = url => {
   return fetch(url)
     .then(checkResponse)
     .catch(err => {
-      throw new Error('fetch getData failed ${err}');
+      throw new Error(`fetch getData failed ${err}`);
     });
 };
 
