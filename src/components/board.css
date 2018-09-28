@@ -1,11 +1,59 @@
+
+#board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    background-color: #016D29;
+    font-size: 5rem;
+
+}
+
+section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+#play {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 img {
-    width: 50px;
-    height: 100px;
+    width: 15vmax;
+    height: 25vmax;
+    box-shadow: 1vmax 1vmax 1vmax black;
+    margin: 2vmax;
 }
 
 .emptySpace {
-    width: 50px;
-    height: 100px;
+    width: 15vmax;
+    height: 25vmax;
     border: 1px solid black;
+    border-radius: 7%;
+    box-shadow: 1vmax 1vmax 1vmax black;
     display: inline-block;
+    margin: 2vmax;
+}
+
+button {
+    display: flex;
+    background-color: #F3C620;
+    border: 5px solid black;
+    margin: 1vmax;
+    font-size: 5rem;
+}
+
+#winnerTxt {
+    width: 100%;
+    text-align: center;
+}
+
+@media all and (min-width: 450px) {
+    #board, button {
+    font-size: 2rem;
+    }
 }
