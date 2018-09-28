@@ -43,7 +43,12 @@ export default class Board extends React.Component {
         prevState.player2.pile,
         prevState.player2.playedPile
       ),
+      winner: sayWhoWon(
+        this.state.player1.playedPile,
+        this.state.player2.playedPile
+      )
     }));
+
     setTimeout(() => {
       const winner = sayWhoWon(
         this.state.player1.playedPile,
@@ -86,29 +91,33 @@ export default class Board extends React.Component {
   render = () => {
     return (
       <main id="board">
-        <Player
-          playerName="Player"
-          score={this.state.player1.pile.length}
-          playedPile={this.state.player1.playedPile}
-          winner={this.state.winner}
-        />
-        <Player
-          playerName="Computer"
-          score={this.state.player2.pile.length}
-          playedPile={this.state.player2.playedPile}
-          winner={this.state.winner}
-        />
-        <button id="play" onClick={() => this.playTurn(1000)}>
-          Play
+        <section>
+          <Player
+            playerName="Player"
+            score={this.state.player1.pile.length}
+            playedPile={this.state.player1.playedPile}
+            winner={this.state.winner}
+          />
+          <Player
+            playerName="Computer"
+            score={this.state.player2.pile.length}
+            playedPile={this.state.player2.playedPile}
+            winner={this.state.winner}
+          />
+        </section>
+        <section>
+          <button id="play" onClick={() => this.playTurn(3000)}>
+            Play
         </button>
-        <button id="speed" onClick={this.speedMode}>
-          {this.state.speedMode ? 'Pause' : 'Speed Mode!'}
-        </button>
-        <div>
-          {this.state.winner
-            ? `Player ${this.state.winner} wins!`
-            : "IT'S A WAR!"}
-        </div>
+          <button id="speed" onClick={this.speedMode}>
+            {this.state.speedMode ? 'Pause' : 'Speed Mode!'}
+          </button>
+          <p id="winnerTxt">
+            {this.state.winner
+              ? `Player ${this.state.winner} wins!`
+              : "IT'S A WAR!"}
+          </p>
+        </section>
       </main>
     );
   };
