@@ -4,8 +4,11 @@ Huh. Good god y'all, what is it good for?
 ## Installation
 
 Clone repo
+
 `npm i`
+
 `npm start`
+
 
 ## Description
 
